@@ -377,27 +377,94 @@
                     <div class="col-md-7">
                         <div class="contact-form">
                             <div id="success"></div>
-                            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                                <div class="control-group">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
-                                    <p class="help-block text-danger"></p>
+                            <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                    <label for="name">Your Name</label>
                                 </div>
-                                <div class="control-group">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
-                                    <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                    <label for="email">Your Email</label>
+                                    <script>
+                                        // Prevent form submission if email is empty or invalid
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var form = document.querySelector('form');
+                                            var emailInput = document.getElementById('email');
+                                            var emailError = document.getElementById('emailError');
+                                            form.addEventListener('submit', function(e) {
+                                                var email = emailInput.value.trim();
+                                                var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                                                if (!email || !valid) {
+                                                    emailError.style.display = 'block';
+                                                    emailInput.focus();
+                                                    e.preventDefault();
+                                                    return false;
+                                                } else {
+                                                    emailError.style.display = 'none';
+                                                }
+                                            });
+                                            emailInput.addEventListener('input', function() {
+                                                emailError.style.display = 'none';
+                                            });
+                                        });
+                                    </script>
+                                    <div id="emailError" style="color:red; font-size:0.9em; display:none;">Please enter a valid email.</div>
                                 </div>
-                                <div class="control-group">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
-                                    <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    <label for="subject">Subject</label>
                                 </div>
-                                <div class="control-group">
-                                    <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                                    <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
+                                    <label for="message">Message</label>
                                 </div>
-                                <div>
-                                    <button class="btn" type="submit" id="sendMessageButton">Send Message</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="col-12">
+                                
+                                <button class="btn btn-primary py-2 px-3 me-3" type="submit">
+                                    <span id="sendMessageText">Send Message</span>
+                                </button>
+                                <script>
+                                document.querySelector('form').addEventListener('submit', function(e) {
+                                    var emailInput = document.getElementById('email');
+                                    var emailError = document.getElementById('emailError');
+                                    var email = emailInput.value.trim();
+                                    var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                                    if (!email || !valid) {
+                                        emailError.style.display = 'block';
+                                        emailInput.focus();
+                                        e.preventDefault();
+                                        return false;
+                                    } else {
+                                        emailError.style.display = 'none';
+                                    }
+                                    e.preventDefault();
+                                    var name = document.getElementById('name').value.trim();
+                                    var subject = document.getElementById('subject').value.trim();
+                                    var message = document.getElementById('message').value.trim();
+                                    var fullMessage = "Name: " + (name || "N/A") + "%0AEmail: " + (email || "N/A") + "%0ASubject: " + (subject || "N/A") + "%0AMessage: " + (message || "Hello, I am interested. Guide me.");
+                                    var waUrl = "https://wa.me/+256726956773?text=" + fullMessage;
+                                    window.open(waUrl, '_blank');
+                                });
+                                </script>
+                                
+                                    </script>
+                                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </button>
+        
+                            </div>
+                        </div>
+                    </form>
                         </div>
                     </div>
                 </div>
